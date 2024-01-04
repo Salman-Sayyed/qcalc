@@ -1,16 +1,15 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-}
-
-ext {
-	buildId = System.currentTimeMillis()
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.crio'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+
+java {
+	sourceCompatibility = '17'
+}
 
 repositories {
 	mavenCentral()
@@ -18,29 +17,9 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-	reports {
-		junitXml.enabled = true
-		def destinationDirectory = System.getProperty("user.home") + "/.gradle/daemon/${buildId}/test-results"
-		junitXml.destination = file(destinationDirectory)
-		html.enabled = true
-	}
-	useJUnitPlatform {
-	}
-	testLogging.events ("STANDARD_ERROR")
-	testLogging.events ("STANDARD_OUT")
-	afterSuite { desc, result ->
-		if (!desc.parent) {
-			println "\nTEST RESULT: ${result.resultType}"
-			println "TEST SUMMARY: RAN ${result.testCount} TESTS, " +
-					"${result.successfulTestCount} SUCCEEDED, " +
-					"${result.failedTestCount} FAILED, " +
-					"${result.skippedTestCount} SKIPPED"
-		}
-	}
+tasks.named('test') {
+	useJUnitPlatform()
 }
