@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class StandardCalculatorTest {
     private StandardCalculator standardCalculator;
@@ -75,5 +76,37 @@ public class StandardCalculatorTest {
         standardCalculator.divide(18, 6);
         double actualResult = standardCalculator.getResult();
         Assertions.assertEquals(3, actualResult);
+    }
+
+    @Test
+    @DisplayName("Test Addition Double Overflow")
+    void testAdditionOverflow(){
+        Assertions.assertThrows(ArithmeticException.class, ()->{
+            standardCalculator.add(Double.MAX_VALUE, Double.MAX_VALUE);
+        });
+    }
+
+    @Test
+    @DisplayName("Test Subtraction Double Overflow")
+    void testSubtractionOverflow(){
+        Assertions.assertThrows(ArithmeticException.class, ()->{
+            standardCalculator.subtract(-Double.MAX_VALUE, Double.MAX_VALUE);
+        });
+    }
+
+    @Test
+    @DisplayName("Test Multiplication Double Overflow")
+    void testMultiplicationOverflow(){
+        Assertions.assertThrows(ArithmeticException.class, ()->{
+            standardCalculator.multiply(Double.MAX_VALUE, Double.MAX_VALUE);
+        });
+    }
+
+    @Test
+    @DisplayName("Test Division Double Overflow")
+    void testDivisionOverflow(){
+        Assertions.assertThrows(ArithmeticException.class, ()->{
+            standardCalculator.divide(Double.MAX_VALUE, 0);
+        });
     }
 }

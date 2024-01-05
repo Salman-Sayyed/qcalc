@@ -33,19 +33,36 @@ public class StandardCalculator {
     }
 
     public void add(double num1, double num2){
-        result = (double)num1+(double)num2;
+        double result = num1+num2;
+        if(result==Double.MAX_VALUE||result==Double.POSITIVE_INFINITY){
+            throw new ArithmeticException("Double Overflow");
+        }
+        this.result = result;
     }
 
     public void subtract(double num1, double num2){
-        result = (double)num1-(double)num2;
+        double result = num1-num2;
+            if(result==Double.MIN_VALUE || result==Double.NEGATIVE_INFINITY){
+                throw new ArithmeticException("Double Overflow");
+            }
+        this.result = result;
     }
 
     public void multiply(double num1, double num2){
-        result = (double)num1*(double)num2;
+        double result = num1*num2;
+            if(result==Double.MAX_VALUE||result==Double.POSITIVE_INFINITY 
+                || result==Double.NEGATIVE_INFINITY || result==Double.NEGATIVE_INFINITY){
+                throw new ArithmeticException("Double Overflow");
+            }
+        this.result = result;
     }
 
     public void divide(double num1, double num2){
-        result = (double)num1/(double)num2;
+        double result = num1/num2;
+            if(result>=Double.MAX_VALUE||result>=Double.POSITIVE_INFINITY || result<=Double.NEGATIVE_INFINITY){
+                throw new ArithmeticException("Double Overflow");
+            }
+        this.result = result;
     }
 
     public void printResult(){
